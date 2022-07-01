@@ -681,6 +681,28 @@ class Client
 
         return $this->performRequest($endpoint);
     }
+	/**
+	 * $params['index']              = (string) The name of the index (Required)
+	 * $params['allow_no_indices']   = (boolean) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+	 * $params['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both. (Options = open,closed,hidden,none,all) (Default = open)
+	 * $params['ignore_unavailable'] = (boolean) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+	 * $params['master_timeout']     = (time) Specify timeout for connection to master
+	 * $params['timeout']            = (time) Explicit operation timeout
+	 *
+	 * @param array $params Associative array of parameters
+	 * @return array
+	 */
+	public function deleteIndex(array $params = [])
+	{
+		$index = $this->extractArgument($params, 'index');
+
+		$endpointBuilder = $this->endpoints;
+		$endpoint = $endpointBuilder('DeleteIndex');
+		$endpoint->setParams($params);
+		$endpoint->setIndex($index);
+
+		return $this->performRequest($endpoint);
+	}
     /**
      *
      * @param array $params Associative array of parameters
